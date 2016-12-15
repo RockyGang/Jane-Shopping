@@ -16,47 +16,47 @@
 		 */
 		var myCssName = $.cookie("MyCssSkin");
 		if (myCssName != undefined) {
-            switchCss(myCssName);
+           		switchCss(myCssName);
 		}
 
 		$("#skin li").click(function() {
 			var cssName = $(this).attr("id");
-          switchCss(cssName);
+         		switchCss(cssName);
 		});
 		
 		
 		/*
 		 * 动态评分  -------------------------------------------------
 		 */
-		     var hig=16;
+		 var hig=16;
 	         var X=0;
 	         var num=0;
 	         var hh=0;
-		$(".nostar li").mousemove(function(event){
-          	X= event.offsetX;
-          	num = parseInt(X/hig)+1;
-         	hh =num*hig;
-           $(this).parent().css("background-position","0px -"+hh+"px");
-        }).mouseout(function(){
-             //alert(hh);
-       		 $(this).parent().css("background-position","0px -"+(hh)+"px");
-        }).click(function (){
-        	alert("你给的是"+num+"分(⊙o⊙)哦");
-        });
-	});
+		 $(".nostar li").mousemove(function(event){
+          		X= event.offsetX;
+          		num = parseInt(X/hig)+1;
+         		hh =num*hig;
+           		$(this).parent().css("background-position","0px -"+hh+"px");
+        	 }).mouseout(function(){
+             		//alert(hh);
+       			$(this).parent().css("background-position","0px -"+(hh)+"px");
+       		 }).click(function (){
+        		alert("你给的是"+num+"分(⊙o⊙)哦");
+        	 });
+		 });
 	
 	
 	
-	function switchCss(cssName) {
+		 function switchCss(cssName) {
 		//alert(cssName);
-		$("#"+cssName).addClass("selected").siblings().removeClass("selected");
-		$("#cssfile").attr("href", "styles/skin/" + cssName + ".css");
+			$("#"+cssName).addClass("selected").siblings().removeClass("selected");
+			$("#cssfile").attr("href", "styles/skin/" + cssName + ".css");
 
-		$.cookie("MyCssSkin", cssName, {
-			path : '/',
-			expires : 10
-		});
-	}
+			$.cookie("MyCssSkin", cssName, {
+				path : '/',
+				expires : 10
+			});
+		}
 	
 </script>
 </head>
