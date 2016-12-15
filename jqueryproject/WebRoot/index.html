@@ -10,167 +10,165 @@
 		<script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
 		<script type="text/javascript" src="js/jquery.cookie.js"></script>
 		<script type="text/javascript">
-	$(function(){
-		/*
-		 * 最新动态  ---------------------------------------------------
-		 */	
-		//滚动条
-		var time=setInterval(show,800);
-		$(".scrollNews").hover(function(){
-			clearInterval(time);
-		},function(){
-			time = setInterval(show, 800);
-		});
-		
-		
-		
-		/*
-		 * 产品分类   --------------------------------------------------
-		 */
-		 //点击图片隐藏产品分类区域
-		 $(".module_up_down").click(function(){
-		 	$(this).siblings("ul").slideToggle(800);
-		 	$(this).siblings("div").slideToggle(800);
-		 });
-		 //吧所有的子项隐藏
-		 $("li.m-expanded ul").hide();
-		 $("li.m-expanded").addClass("m-collapsed");
-		 //点击一级菜单，展开子项
-		 $("ul li span").click(function(){
-			//alert("sdffa");  .siblings().hide()
-			//$(this).next().toggle(600);
-			if($(this).next().is(":hidden")){
-				$(this).next("ul").show(500);
-				$(this).parent().removeClass("m-collapsed").addClass("m-expanded");
-			}else{
-				$(this).next().hide(500);
-				$(this).parent().removeClass("m-expanded").addClass("m-collapsed");
-			}
-		 });
+		$(function(){
+			/*
+			 * 最新动态  ---------------------------------------------------
+			 */	
+			//滚动条
+			var time=setInterval(show,800);
+			$(".scrollNews").hover(function(){
+				clearInterval(time);
+			},function(){
+				time = setInterval(show, 800);
+			});
+
+			/*
+			 * 产品分类   --------------------------------------------------
+			 */
+			 //点击图片隐藏产品分类区域
+			 $(".module_up_down").click(function(){
+				$(this).siblings("ul").slideToggle(800);
+				$(this).siblings("div").slideToggle(800);
+			 });
+			 //吧所有的子项隐藏
+			 $("li.m-expanded ul").hide();
+			 $("li.m-expanded").addClass("m-collapsed");
+			 //点击一级菜单，展开子项
+			 $("ul li span").click(function(){
+				//alert("sdffa");  .siblings().hide()
+				//$(this).next().toggle(600);
+				if($(this).next().is(":hidden")){
+					$(this).next("ul").show(500);
+					$(this).parent().removeClass("m-collapsed").addClass("m-expanded");
+				}else{
+					$(this).next().hide(500);
+					$(this).parent().removeClass("m-expanded").addClass("m-collapsed");
+				}
+			 });
 
 		 
-		 /*
-		  * 首页打广告   ------------------------------------------------
-		  */
+			 /*
+			  * 首页打广告   ------------------------------------------------
+			  */
+
+			  var n=0;
+			 $(".num li").eq(0).addClass("on").siblings().removeClass("on");
+			 $("div.content_right div.ad ul.num li").mouseover(function(){
+				var index=$(this).index();
+				 n=index;
+				//给每个选中的追加样式
+				 $(this).addClass("on").siblings().removeClass("on");
+				 //获取到当前下标对应的图片下标
+				 showImg($(this),index);
+			 });
+			var timer="";
+			$(".ad").hover(function(){
+			  clearInterval(timer);
+			},function(){
+				timer=setInterval(function(){
+				showImg($(".num li"),n);	
+				 n++;
+				if(n==5){
+				 n=0;
+				}
+			},2000);
+			}).trigger("mouseleave");
+
 		 
-		  var n=0;
-		 $(".num li").eq(0).addClass("on").siblings().removeClass("on");
-		 $("div.content_right div.ad ul.num li").mouseover(function(){
-		 	var index=$(this).index();
-		 	 n=index;
-		 	//给每个选中的追加样式
-		 	 $(this).addClass("on").siblings().removeClass("on");
-		 	 //获取到当前下标对应的图片下标
-			 showImg($(this),index);
-		 });
-		var timer="";
-		$(".ad").hover(function(){
-		  clearInterval(timer);
-		},function(){
-		 	timer=setInterval(function(){
-		 	showImg($(".num li"),n);	
-		 	 n++;
-		 	if(n==5){
-		 	 n=0;
-		 	}
-		},2000);
-		}).trigger("mouseleave");
-		 
-		 
-		/*
-		 * 新品上市    --------------------------------------------
-	 	 */
-	 	var count = $(".prolist_content ul li").length;//图片的个数
-		var num = 4;
-		var pageCount = Math.ceil(count / 4);//得到总页数     
-		var page = 1; //当前页
-		var divWith=$(".content_right").width();//每次显示的宽度
-	 	$(".module_left_right img.goRight").click(function(){
-	 		if (page < pageCount) {
-				$(".prolist_content").animate({
-					"left" : "-="+divWith
-				}, 800);
-				page++;
-			} else {
-				$(".prolist_content").animate({
-					"left" : "0"
-				}, 10);
-				page = 1;
-			}
-	 	});
+			/*
+			 * 新品上市    --------------------------------------------
+			 */
+			var count = $(".prolist_content ul li").length;//图片的个数
+			var num = 4;
+			var pageCount = Math.ceil(count / 4);//得到总页数     
+			var page = 1; //当前页
+			var divWith=$(".content_right").width();//每次显示的宽度
+			$(".module_left_right img.goRight").click(function(){
+				if (page < pageCount) {
+					$(".prolist_content").animate({
+						"left" : "-="+divWith
+					}, 800);
+					page++;
+				} else {
+					$(".prolist_content").animate({
+						"left" : "0"
+					}, 10);
+					page = 1;
+				}
+			});
 	 	
-		$(".module_left_right img.goLeft").click(function() {
-			if (page > 1) {
+			$(".module_left_right img.goLeft").click(function() {
+				if (page > 1) {
+					$(".prolist_content").animate({
+						"left" : "+="+divWith
+					}, 800);
+					page--;
+				}else{
 				$(".prolist_content").animate({
-					"left" : "+="+divWith
-				}, 800);
-				page--;
-			}else{
-			$(".prolist_content").animate({
-					"left" : "-"+divWith*(pageCount-1)
-				}, 10);
-				page=pageCount;
+						"left" : "-"+divWith*(pageCount-1)
+					}, 10);
+					page=pageCount;
+				}
+			});
+		
+			/*
+			 * 鼠标进入显示细节图片   -------------------------------------------------
+			 */
+			 $(".prolist_content ul li img").each(function(){
+				 var $pos=$(this).position();
+				 var left=$pos.left;
+				 var top=$pos.top;
+				 var imgw=$(this).width();
+				 var imgh=$(this).height();
+				 var $span="<span style='z-index:0;position:absolute;top:"+top+"px;left:"+left+"px;width:"+imgw+"px;height:"+imgh+"px'></span>";
+				 $(this).after($span);
+	     		 });
+
+			$(".prolist_content ul li a").hover(function(){
+				$(this).children("span").addClass("imageOver");
+			},function(){
+				$(this).children("span").removeClass("imageOver");
+			});
+		
+		
+			/*
+			 * 首页换肤
+			 */
+			var myCssName = $.cookie("MyCssSkin");
+			if (myCssName != undefined) {
+				switchCss(myCssName);
 			}
+
+			$("#skin li").click(function() {
+				var cssName = $(this).attr("id");
+				switchCss(cssName);
+			});
+		
+		
 		});
-		
-		/*
-		 * 鼠标进入显示细节图片   -------------------------------------------------
-		 */
-		 $(".prolist_content ul li img").each(function(){
-         var $pos=$(this).position();
-         var left=$pos.left;
-         var top=$pos.top;
-         var imgw=$(this).width();
-         var imgh=$(this).height();
-         var $span="<span style='z-index:0;position:absolute;top:"+top+"px;left:"+left+"px;width:"+imgw+"px;height:"+imgh+"px'></span>";
-         $(this).after($span);
-     });
-     
-		$(".prolist_content ul li a").hover(function(){
-			$(this).children("span").addClass("imageOver");
-		},function(){
-			$(this).children("span").removeClass("imageOver");
-		});
-		
-		
-		/*
-		 * 首页换肤
-		 */
-		var myCssName = $.cookie("MyCssSkin");
-		if (myCssName != undefined) {
-            switchCss(myCssName);
+	
+		function switchCss(cssName) {
+			//alert(cssName);
+			$("#"+cssName).addClass("selected").siblings().removeClass("selected");
+			$("#cssfile").attr("href", "styles/skin/" + cssName + ".css");
+
+			$.cookie("MyCssSkin", cssName, {
+				path : '/',
+				expires : 10
+			});
 		}
 
-		$("#skin li").click(function() {
-			var cssName = $(this).attr("id");
-          switchCss(cssName);
-		});
-		
-		
-	});
 	
-	function switchCss(cssName) {
-		//alert(cssName);
-		$("#"+cssName).addClass("selected").siblings().removeClass("selected");
-		$("#cssfile").attr("href", "styles/skin/" + cssName + ".css");
-
-		$.cookie("MyCssSkin", cssName, {
-			path : '/',
-			expires : 10
-		});
-	}
+		function showImg($ts,index){
+			$(".num li").eq(index).addClass("on").siblings().removeClass("on");
+				$ts.parent().siblings("ul.slider").animate({
+					top : "-" + index * 150
+				}, 800);
+		}
 	
-	
-	function showImg($ts,index){
-		$(".num li").eq(index).addClass("on").siblings().removeClass("on");
-		 	$ts.parent().siblings("ul.slider").animate({
-				top : "-" + index * 150
-			}, 800);
-	}
-	
-	function show(){
-		$(".scrollNews ul li:first").appendTo($(".scrollNews ul"));
-	}
+		function show(){
+			$(".scrollNews ul li:first").appendTo($(".scrollNews ul"));
+		}
 
 </script>
 	</head>
